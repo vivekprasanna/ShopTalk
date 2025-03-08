@@ -1,0 +1,24 @@
+{
+    "description": "Here are some options for red medium shirts based on your search.",
+    "products": [
+      {
+        "title": "Classic Red Cotton Shirt",
+        "details": "A stylish and comfortable medium-sized cotton shirt in red.",
+        "image": "https://example.com/images/red-shirt1.jpg",
+        "url": "https://example.com/product/red-shirt1"
+      },
+      {
+        "title": "Casual Red Polo Shirt",
+        "details": "A medium-sized casual red polo shirt perfect for everyday wear.",
+        "image": "https://example.com/images/red-shirt2.jpg",
+        "url": "https://example.com/product/red-shirt2"
+      },
+      {
+        "title": "Formal Red Dress Shirt",
+        "details": "A sleek, medium-sized formal red dress shirt for office or events.",
+        "image": "https://example.com/images/red-shirt3.jpg",
+        "url": "https://example.com/product/red-shirt3"
+      }
+    ]
+}
+  
