@@ -1,0 +1,27 @@
+pandas
+numpy
+matplotlib
+seaborn
+wordcloud
+datasets
+transformers
+torch
+langchain-community
+sentence-transformers
+langchain
+ray[tune]
+transformers[torch]
+accelerate>=0.26.0
+chromadb
+python-dotenv
+openai
+mlflow==2.2.2
+python-box==6.0.2
+pyYAML
+tqdm
+ensure==1.0.2
+joblib
+types-PyYAML
+Flask
+Flask-Cors
+-e . # This is needed for creation as a local Project

@@ -1,1 +1,7 @@
 /.idea/
+/research-initial python notebooks/sample_20k.csv
+/research-initial python notebooks/master_df.csv
+/research-initial python notebooks/merged_master.csv
+/research-initial python notebooks/.ipynb_checkpoints/ShopTalk-DataCleaning-checkpoint.ipynb
+/research-initial python notebooks/.ipynb_checkpoints/ShopTalk-Model-Experimentation-checkpoint.ipynb
+/research-initial python notebooks/.ipynb_checkpoints/
