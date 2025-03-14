@@ -2,6 +2,7 @@ from mlProject.config.configuration import ConfigurationManager
 from mlProject.components.data_validation import DataValidation
 from mlProject import logger
 from pathlib import Path
+import os
 
 STAGE_NAME = "Data Transformation stage"
 
@@ -11,27 +12,23 @@ class DataValidationTrainingPipeline:
         pass
 
     def main(self):
-        try:
-            with open(Path("artifacts/data_validation/status.txt"), "r") as f:
-                status = f.read().split(" ")[-1]
-
-            if status == "True":
-                config = ConfigurationManager()
-                data_validation_config = config.get_data_transformation_config()
+        config = ConfigurationManager()
+        data_validation_config = config.get_data_validation_config()
+        if not os.path.exists(data_validation_config.data_sample_path):
+            try:
                 data_validation = DataValidation(config=data_validation_config)
-                # data_transformation.train_test_spliting()
-
-            else:
-                raise Exception("You data schema is not valid")
-
-        except Exception as e:
-            print(e)
+                data_validation.merge_dataframes()
+                data_validation.clean_merged_data()
+                data_validation.create_sample_data()
+            except Exception as e:
+                logger.exception(e)
+                raise e
 
 
 if __name__ == '__main__':
     try:
         logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-        obj = DataTransformationTrainingPipeline()
+        obj = DataValidationTrainingPipeline()
         obj.main()
         logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
     except Exception as e:

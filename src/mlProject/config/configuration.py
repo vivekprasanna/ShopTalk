@@ -58,7 +58,10 @@ class ConfigurationManager:
         data_validation_config = DataValidationConfig(
             root_dir=config.root_dir,
             data_path=config.data_path,
-            images_path=config.images_path
+            images_path=config.images_path,
+            data_master_path=config.data_master_path,
+            data_sample_path=config.data_sample_path,
+            STATUS_FILE=config.STATUS_FILE,
         )
 
         return data_validation_config

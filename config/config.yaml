@@ -11,15 +11,18 @@ data_ingestion:
 data_transformation:
   root_dir: artifacts/data_transformation
   listings_path: "artifacts/data_ingestion/data/listings_*.json"
-  images_path: "artifacts/data_ingestion/images.csv"
-  STATUS_FILE: artifacts/data_validation/status.txt
+  images_path: "artifacts/data_ingestion/data/images.csv"
+  STATUS_FILE: artifacts/data_transformation/status.txt
   data_csv_path: "artifacts/data_transformation/df_data.csv"
 
 
 data_validation:
   root_dir: artifacts/data_validation
-  data_path: "artifacts/data_validation/df_data.csv"
-  images_path: "artifacts/data_ingestion/images.csv"
+  data_path: "artifacts/data_transformation/df_data.csv"
+  images_path: "artifacts/data_ingestion/data/images.csv"
+  data_master_path: "artifacts/data_validation/df_master.csv"
+  data_sample_path: "artifacts/data_validation/df_sample_20k.csv"
+  STATUS_FILE: artifacts/data_validation/status.txt
 
 
 model_trainer:

@@ -25,6 +25,9 @@ class DataValidationConfig:
     root_dir: Path
     data_path: Path
     images_path: str
+    data_master_path: str
+    data_sample_path: str
+    STATUS_FILE: str
 
 
 @dataclass(frozen=True)
