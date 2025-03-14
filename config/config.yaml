@@ -13,7 +13,7 @@ data_transformation:
   listings_path: "artifacts/data_ingestion/data/listings_*.json"
   images_path: "artifacts/data_ingestion/images.csv"
   STATUS_FILE: artifacts/data_validation/status.txt
-  data_csv_path: "artifacts/data_validation/df_data.csv"
+  data_csv_path: "artifacts/data_transformation/df_data.csv"
 
 
 data_validation:
