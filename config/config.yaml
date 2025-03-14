@@ -4,20 +4,22 @@ artifacts_root: artifacts
 data_ingestion:
   root_dir: artifacts/data_ingestion
   #source_URL: https://github.com/someshnaman/End_to_end_MLOPS_project_/raw/master/wine-data.zip
-  source_URL: https://drive.google.com/file/d/1NNqlat1GdreoGhMTC5G8l5Q7XV-qtfVp/view?usp=drive_link
+  source_URL: https://drive.google.com/uc?export=download&id=1NNqlat1GdreoGhMTC5G8l5Q7XV-qtfVp
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
 
-data_validation:
-  root_dir: artifacts/data_validation
-  unzip_data_dir: artifacts/data_ingestion/winequality-red.csv
-  STATUS_FILE: artifacts/data_validation/status.txt
-
-
 data_transformation:
   root_dir: artifacts/data_transformation
-  data_path: artifacts/data_ingestion/winequality-red.csv+
+  listings_path: "artifacts/data_ingestion/data/listings_*.json"
+  images_path: "artifacts/data_ingestion/images.csv"
+  STATUS_FILE: artifacts/data_validation/status.txt
+  data_csv_path: "artifacts/data_validation/df_data.csv"
 
+
+data_validation:
+  root_dir: artifacts/data_validation
+  data_path: "artifacts/data_validation/df_data.csv"
+  images_path: "artifacts/data_ingestion/images.csv"
 
 
 model_trainer:

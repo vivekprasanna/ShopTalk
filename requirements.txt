@@ -1,5 +1,5 @@
 cmake
-pandas
+pandas~=2.2.3
 numpy
 matplotlib
 seaborn
@@ -26,4 +26,8 @@ types-PyYAML
 Flask
 Flask-Cors
 setuptools~=76.0.0
+scikit-learn~=1.6.1
+beartype~=0.20.0
+requests~=2.32.3
+gdown~=5.2.0
 -e . # This is needed for creation as a local Project

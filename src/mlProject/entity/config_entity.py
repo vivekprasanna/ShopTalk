@@ -11,17 +11,20 @@ class DataIngestionConfig:
 
 
 @dataclass(frozen=True)
-class DataValidationConfig:
+class DataTransformationConfig:
     root_dir: Path
     STATUS_FILE: str
-    unzip_data_dir: Path
     all_schema: dict
+    listings_path: str
+    images_path: str
+    data_csv_path: str
 
 
 @dataclass(frozen=True)
-class DataTransformationConfig:
+class DataValidationConfig:
     root_dir: Path
     data_path: Path
+    images_path: str
 
 
 @dataclass(frozen=True)

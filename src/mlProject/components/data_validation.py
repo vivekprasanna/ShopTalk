@@ -1,32 +1,34 @@
+import os
+from mlProject import logger
+from sklearn.model_selection import train_test_split
 import pandas as pd
-
 from mlProject.entity.config_entity import DataValidationConfig
+import glob
+import json
 
 
 class DataValidation:
     def __init__(self, config: DataValidationConfig):
         self.config = config
 
-    def validate_all_columns(self) -> bool:
-        try:
-            validation_status = True
+    ## Note: You can add different data transformation techniques such as Scaler, PCA and all
+    # You can perform all kinds of EDA in ML cycle here before passing this data to the model
 
-            data = pd.read_csv(self.config.unzip_data_dir)
-            all_cols = list(data.columns)
+    def validate_data(self):
+        return
 
-            all_schema = self.config.all_schema.keys()
+    def train_test_spliting(self):
+        data = pd.read_csv(self.config.data_path)
 
-            for col in all_cols:
-                if col not in all_schema:
-                    # validation_status = False
-                    with open(self.config.STATUS_FILE, 'w') as f:
-                        f.write(f"Additional Column found: {col}")
-                # else:
-                    # validation_status = True
-                    # with open(self.config.STATUS_FILE, 'w') as f:
-                    #     f.write(f"Validation status: {validation_status}")
+        # Split the data into training and test sets. (0.75, 0.25) split.
+        train, test = train_test_split(data)
 
-            return validation_status
+        train.to_csv(os.path.join(self.config.root_dir, "train.csv"), index=False)
+        test.to_csv(os.path.join(self.config.root_dir, "test.csv"), index=False)
 
-        except Exception as e:
-            raise e
+        logger.info("Splited data into training and test sets")
+        logger.info(train.shape)
+        logger.info(test.shape)
+
+        print(train.shape)
+        print(test.shape)
