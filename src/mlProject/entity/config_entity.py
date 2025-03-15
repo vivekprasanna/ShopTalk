@@ -31,6 +31,13 @@ class DataValidationConfig:
 
 
 @dataclass(frozen=True)
+class DataVisualizationConfig:
+    root_dir: Path
+    data_master_path: str
+    data_sample_path: str
+
+
+@dataclass(frozen=True)
 class ModelTrainerConfig:
     root_dir: Path
     train_data_path: Path

@@ -3,6 +3,7 @@ from mlProject.utils.common import read_yaml, create_directories
 from mlProject.entity.config_entity import (DataIngestionConfig,
                                             DataValidationConfig,
                                             DataTransformationConfig,
+                                            DataVisualizationConfig,
                                             ModelTrainerConfig,
                                             ModelEvaluationConfig)
 
@@ -65,6 +66,19 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+
+    def get_data_visualization_config(self) -> DataVisualizationConfig:
+        config = self.config.data_visualization
+
+        create_directories([config.root_dir])
+
+        data_visualization_config = DataVisualizationConfig(
+            root_dir=config.root_dir,
+            data_master_path=config.data_master_path,
+            data_sample_path=config.data_sample_path,
+        )
+
+        return data_visualization_config
 
     def get_model_trainer_config(self) -> ModelTrainerConfig:
         config = self.config.model_trainer

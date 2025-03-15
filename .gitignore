@@ -27,3 +27,16 @@
 /artifacts/data_ingestion/data/listings_f.json
 /artifacts/data_ingestion/data.zip
 /logs/running_logs.log
+/artifacts/data_ingestion/
+/artifacts/data_ingestion/__MACOSX/
+/artifacts/data_ingestion/data/
+/artifacts/data_ingestion/data.zip
+/artifacts/data_transformation/
+/artifacts/data_transformation/df_data.csv
+/artifacts/data_validation/
+/artifacts/data_validation/df_master.csv
+/artifacts/data_validation/df_sample_20k.csv
+/.venv/
+/research-initial python notebooks/chromadb_vectorstore/chroma.sqlite3
+/src/mlProject.egg-info/
+/artifacts/
