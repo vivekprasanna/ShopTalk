@@ -40,3 +40,4 @@
 /research-initial python notebooks/chromadb_vectorstore/chroma.sqlite3
 /src/mlProject.egg-info/
 /artifacts/
+/fine_tuned_lora_tripletloss/
