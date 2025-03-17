@@ -35,4 +35,5 @@ streamlit
 flask-restx
 langchain-openai
 langchain-chroma
+flask-cors
 -e . # This is needed for creation as a local Project

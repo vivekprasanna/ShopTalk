@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 import os
 import mlProject.components.chat_bot as cb
+from flask_cors import CORS
 
-app = Flask(__name__)  # initializing a flask app
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 api = Api(app, version="1.0", title="Shopping Assistant API", description="API for chatbot interactions")
 
 # Swagger Namespace

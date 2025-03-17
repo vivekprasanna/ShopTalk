@@ -15,7 +15,8 @@ if st.button("Search"):
     if query:
         # Send request to the API
         response = requests.post(API_ENDPOINT,
-                                 json={"question": query, "chat_history": st.session_state.chat_history})
+                                 json={"question": query, "chat_history": st.session_state.chat_history},
+                                 headers={"Content-Type": "application/json"})
 
         if response.status_code == 200:
             data = response.json()
