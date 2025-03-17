@@ -3441,3 +3441,334 @@ x==========x]
 [2025-03-17 10:55:30,292: INFO: main: >>>>>> stage Model evaluation stage completed <<<<<<
 
 x==========x]
+[2025-03-17 13:41:52,881: INFO: main: >>>>>> stage Create Embedding started <<<<<<]
+[2025-03-17 13:41:52,932: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 13:41:53,281: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 13:41:53,281: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 13:41:53,281: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 13:41:53,592: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 13:41:54,393: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 13:44:14,261: ERROR: main: Batch size 20000 exceeds maximum batch size 5461]
+Traceback (most recent call last):
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/main.py", line 73, in <module>
+    ce.main()
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/src/mlProject/components/CreateEmbeddings.py", line 29, in main
+    vectorstore.add_texts(texts=texts, embedding=embeddings, metadatas=metadatas)
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_community/vectorstores/chroma.py", line 313, in add_texts
+    raise e
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_community/vectorstores/chroma.py", line 299, in add_texts
+    self._collection.upsert(
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/models/Collection.py", line 344, in upsert
+    self._client._upsert(
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/segment.py", line 103, in wrapper
+    return self._rate_limit_enforcer.rate_limit(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/rate_limit/simple_rate_limit/__init__.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/segment.py", line 538, in _upsert
+    validate_batch(
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/types.py", line 833, in validate_batch
+    raise ValueError(
+ValueError: Batch size 20000 exceeds maximum batch size 5461
+[2025-03-17 13:53:28,446: INFO: main: >>>>>> stage Start Chatbot started <<<<<<]
+[2025-03-17 13:53:28,498: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 13:53:28,763: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 13:53:28,763: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 13:53:28,763: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 13:53:29,195: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 13:53:29,742: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 13:53:30,597: ERROR: main: 3 validation errors for ConversationalRetrievalChain
+combine_docs_chain
+  Field required [type=missing, input_value={'llm': OpenAI(client=<op...010>, search_kwargs={})}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+question_generator
+  Field required [type=missing, input_value={'llm': OpenAI(client=<op...010>, search_kwargs={})}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+llm
+  Extra inputs are not permitted [type=extra_forbidden, input_value=OpenAI(client=<openai.res...proxy='', logit_bias={}), input_type=OpenAI]
+    For further information visit https://errors.pydantic.dev/2.10/v/extra_forbidden]
+Traceback (most recent call last):
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/main.py", line 83, in <module>
+    cb.main()
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/src/mlProject/components/chat_bot.py", line 20, in main
+    chatbot = ConversationalRetrievalChain(llm=llm, retriever=retriever)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_core/_api/deprecation.py", line 214, in warn_if_direct_instance
+    return wrapped(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_core/load/serializable.py", line 125, in __init__
+    super().__init__(*args, **kwargs)
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/pydantic/main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 3 validation errors for ConversationalRetrievalChain
+combine_docs_chain
+  Field required [type=missing, input_value={'llm': OpenAI(client=<op...010>, search_kwargs={})}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+question_generator
+  Field required [type=missing, input_value={'llm': OpenAI(client=<op...010>, search_kwargs={})}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+llm
+  Extra inputs are not permitted [type=extra_forbidden, input_value=OpenAI(client=<openai.res...proxy='', logit_bias={}), input_type=OpenAI]
+    For further information visit https://errors.pydantic.dev/2.10/v/extra_forbidden
+[2025-03-17 13:56:43,173: INFO: main: >>>>>> stage Start Chatbot started <<<<<<]
+[2025-03-17 13:56:43,225: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 13:56:43,470: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 13:56:43,470: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 13:56:43,470: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 13:56:43,761: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 13:56:44,354: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 13:56:44,985: ERROR: main: 1 validation error for ConversationalRetrievalChain
+question_generator
+  Field required [type=missing, input_value={'retriever': VectorStore...ariable_name='context')}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing]
+Traceback (most recent call last):
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/main.py", line 83, in <module>
+    cb.main()
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/src/mlProject/components/chat_bot.py", line 27, in main
+    chatbot = ConversationalRetrievalChain(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_core/_api/deprecation.py", line 214, in warn_if_direct_instance
+    return wrapped(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_core/load/serializable.py", line 125, in __init__
+    super().__init__(*args, **kwargs)
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/pydantic/main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ConversationalRetrievalChain
+question_generator
+  Field required [type=missing, input_value={'retriever': VectorStore...ariable_name='context')}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+[2025-03-17 13:59:03,081: INFO: main: >>>>>> stage Start Chatbot started <<<<<<]
+[2025-03-17 13:59:03,133: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 13:59:03,390: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 13:59:03,390: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 13:59:03,390: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 13:59:03,684: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 13:59:04,211: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 13:59:04,913: INFO: main: >>>>>> stage Start Chatbot completed <<<<<<
+
+x==========x]
+[2025-03-17 15:28:43,362: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 15:28:43,693: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 15:28:43,693: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 15:28:43,693: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 15:28:44,158: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 15:28:45,266: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 15:28:45,643: INFO: _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.0.0.49:8080]
+[2025-03-17 15:28:45,643: INFO: _internal: [33mPress CTRL+C to quit[0m]
+[2025-03-17 15:28:52,628: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:28:52] "GET / HTTP/1.1" 200 -]
+[2025-03-17 15:28:53,438: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:28:53] "GET /swaggerui/swagger-ui.css HTTP/1.1" 200 -]
+[2025-03-17 15:28:53,449: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:28:53] "GET /swaggerui/droid-sans.css HTTP/1.1" 200 -]
+[2025-03-17 15:28:53,450: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:28:53] "GET /swaggerui/swagger-ui-standalone-preset.js HTTP/1.1" 200 -]
+[2025-03-17 15:28:53,457: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:28:53] "GET /swaggerui/swagger-ui-bundle.js HTTP/1.1" 200 -]
+[2025-03-17 15:28:53,628: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:28:53] "GET /swagger.json HTTP/1.1" 200 -]
+[2025-03-17 15:28:53,683: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:28:53] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -]
+[2025-03-17 15:30:36,558: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 429 Too Many Requests"]
+[2025-03-17 15:30:36,562: INFO: _base_client: Retrying request to /completions in 0.461291 seconds]
+[2025-03-17 15:30:37,415: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 429 Too Many Requests"]
+[2025-03-17 15:30:37,416: INFO: _base_client: Retrying request to /completions in 0.766039 seconds]
+[2025-03-17 15:30:38,298: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 429 Too Many Requests"]
+[2025-03-17 15:30:38,309: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:30:38] "[35m[1mPOST /api/submit HTTP/1.1[0m" 500 -]
+[2025-03-17 15:39:50,464: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 200 OK"]
+[2025-03-17 15:39:50,537: ERROR: app: Exception on /api/submit [POST]]
+Traceback (most recent call last):
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/flask_restx/api.py", line 406, in wrapper
+    return self.make_response(data, code, headers=headers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/flask_restx/api.py", line 430, in make_response
+    resp = self.representations[mediatype](data, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/flask_restx/representations.py", line 24, in output_json
+    resp = make_response(dumped, code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/flask/helpers.py", line 185, in make_response
+    return current_app.make_response(args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/flask/app.py", line 1224, in make_response
+    rv = self.response_class(
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/werkzeug/wrappers/response.py", line 155, in __init__
+    super().__init__(
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/werkzeug/sansio/response.py", line 125, in __init__
+    self.headers = Headers(headers)
+                   ^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/werkzeug/datastructures/headers.py", line 73, in __init__
+    self.extend(defaults)
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/werkzeug/datastructures/headers.py", line 252, in extend
+    self.add(key, value)
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/werkzeug/datastructures/headers.py", line 360, in add
+    value_str = _str_header_value(value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/werkzeug/datastructures/headers.py", line 600, in _str_header_value
+    raise ValueError("Header values must not contain newline characters.")
+ValueError: Header values must not contain newline characters.
+[2025-03-17 15:39:50,566: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:39:50] "[35m[1mPOST /api/submit HTTP/1.1[0m" 500 -]
+[2025-03-17 15:45:02,322: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 15:45:02,563: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 15:45:02,563: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 15:45:02,563: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 15:45:02,905: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 15:45:03,909: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 15:45:04,282: INFO: _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.0.0.49:8080]
+[2025-03-17 15:45:04,282: INFO: _internal: [33mPress CTRL+C to quit[0m]
+[2025-03-17 15:45:16,524: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:16] "GET / HTTP/1.1" 200 -]
+[2025-03-17 15:45:16,646: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:16] "[36mGET /swaggerui/droid-sans.css HTTP/1.1[0m" 304 -]
+[2025-03-17 15:45:16,647: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:16] "[36mGET /swaggerui/swagger-ui.css HTTP/1.1[0m" 304 -]
+[2025-03-17 15:45:16,647: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:16] "[36mGET /swaggerui/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 -]
+[2025-03-17 15:45:16,647: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:16] "[36mGET /swaggerui/swagger-ui-bundle.js HTTP/1.1[0m" 304 -]
+[2025-03-17 15:45:16,829: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:16] "GET /swagger.json HTTP/1.1" 200 -]
+[2025-03-17 15:45:16,836: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:16] "[36mGET /swaggerui/favicon-32x32.png HTTP/1.1[0m" 304 -]
+[2025-03-17 15:45:26,610: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 200 OK"]
+[2025-03-17 15:45:26,637: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:26] "POST /api/submit HTTP/1.1" 200 -]
+[2025-03-17 15:45:46,106: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 200 OK"]
+[2025-03-17 15:45:46,111: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 15:45:46] "POST /api/submit HTTP/1.1" 200 -]
+[2025-03-17 15:58:19,227: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 15:58:19,491: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 15:58:19,491: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 15:58:19,491: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 15:58:19,857: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 15:58:20,834: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:01:56,448: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:01:56,689: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:01:56,690: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:01:56,690: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:01:57,031: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:01:58,321: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:04:15,101: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:04:15,352: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:04:15,352: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:04:15,352: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:04:15,735: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:04:16,932: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:08:01,488: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:08:01,753: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:08:01,753: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:08:01,753: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:08:02,195: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:08:02,695: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:08:02,937: INFO: _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.0.0.49:8080]
+[2025-03-17 16:08:02,937: INFO: _internal: [33mPress CTRL+C to quit[0m]
+[2025-03-17 16:08:14,166: INFO: chat_bot: Collection count: 0]
+[2025-03-17 16:08:15,379: INFO: chat_bot: Retrieved docs: []]
+[2025-03-17 16:08:16,255: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 200 OK"]
+[2025-03-17 16:08:16,281: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:08:16] "POST /api/submit HTTP/1.1" 200 -]
+[2025-03-17 16:11:25,126: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:11:25,394: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:11:25,394: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:11:25,394: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:11:25,852: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:11:26,430: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:11:26,781: INFO: _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.0.0.49:8080]
+[2025-03-17 16:11:26,781: INFO: _internal: [33mPress CTRL+C to quit[0m]
+[2025-03-17 16:11:34,281: INFO: chat_bot: Collection count: 0]
+[2025-03-17 16:11:34,949: INFO: chat_bot: Retrieved docs: []]
+[2025-03-17 16:11:36,073: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 200 OK"]
+[2025-03-17 16:11:36,088: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:11:36] "POST /api/submit HTTP/1.1" 200 -]
+[2025-03-17 16:15:11,549: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:15:11,815: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:15:11,815: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:15:11,815: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:15:12,109: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:15:12,735: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:15:13,041: INFO: chat_bot: ls -lh chromadb_vectorstore: CompletedProcess(args=['ls', '-lh', 'chromadb_vectorstore'], returncode=0, stdout='total 328\ndrwxr-xr-x@ 2 vivekprabu  staff    64B Mar 17 13:44 a1cbe240-a44b-4207-b8f7-9977d06bafd8\n-rw-r--r--@ 1 vivekprabu  staff   164K Mar 17 13:41 chroma.sqlite3\n', stderr='')]
+[2025-03-17 16:15:15,200: INFO: _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.0.0.49:8080]
+[2025-03-17 16:15:15,201: INFO: _internal: [33mPress CTRL+C to quit[0m]
+[2025-03-17 16:21:00,336: INFO: main: >>>>>> stage Create Embedding started <<<<<<]
+[2025-03-17 16:21:00,388: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:21:00,724: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:21:00,724: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:21:00,725: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:21:01,185: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:21:01,822: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:22:49,924: ERROR: main: Batch size 20000 exceeds maximum batch size 5461]
+Traceback (most recent call last):
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/main.py", line 73, in <module>
+    ce.main()
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/src/mlProject/components/CreateEmbeddings.py", line 29, in main
+    vectorstore.add_texts(texts=texts, embedding=embeddings, metadatas=metadatas)
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_community/vectorstores/chroma.py", line 313, in add_texts
+    raise e
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/langchain_community/vectorstores/chroma.py", line 299, in add_texts
+    self._collection.upsert(
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/models/Collection.py", line 344, in upsert
+    self._client._upsert(
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/segment.py", line 103, in wrapper
+    return self._rate_limit_enforcer.rate_limit(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/rate_limit/simple_rate_limit/__init__.py", line 24, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/segment.py", line 538, in _upsert
+    validate_batch(
+  File "/Users/vivekprabu/PycharmProjects/ShopTalk/.venv/lib/python3.12/site-packages/chromadb/api/types.py", line 833, in validate_batch
+    raise ValueError(
+ValueError: Batch size 20000 exceeds maximum batch size 5461
+[2025-03-17 16:36:23,367: INFO: main: >>>>>> stage Create Embedding started <<<<<<]
+[2025-03-17 16:36:23,414: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:36:23,741: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:36:23,742: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:36:23,742: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:36:24,105: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:36:24,795: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:39:36,847: INFO: main: >>>>>> stage Create Embedding started <<<<<<]
+[2025-03-17 16:39:36,899: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:39:37,306: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:39:37,306: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:39:37,306: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:39:37,660: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:39:38,310: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:41:58,067: INFO: main: >>>>>> stage Create Embedding completed <<<<<<
+
+x==========x]
+[2025-03-17 16:45:28,991: INFO: config: PyTorch version 2.6.0 available.]
+[2025-03-17 16:45:29,270: INFO: SentenceTransformer: Use pytorch device_name: mps]
+[2025-03-17 16:45:29,270: INFO: SentenceTransformer: Load pretrained SentenceTransformer: ./fine_tuned_lora_tripletloss]
+[2025-03-17 16:45:29,270: WARNING: SentenceTransformer: No sentence-transformers model found with name ./fine_tuned_lora_tripletloss. Creating a new one with mean pooling.]
+[2025-03-17 16:45:30,708: INFO: tuners_utils: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!]
+[2025-03-17 16:45:31,300: INFO: posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.]
+[2025-03-17 16:45:31,542: INFO: chat_bot: ls -lh chromadb_vectorstore: CompletedProcess(args=['ls', '-lh', 'chromadb_vectorstore'], returncode=0, stdout='total 163912\ndrwxr-xr-x@ 7 vivekprabu  staff   224B Mar 17 16:40 7979249f-d2f6-4030-98f4-c6cbbfe51bf5\n-rw-r--r--@ 1 vivekprabu  staff    74M Mar 17 16:41 chroma.sqlite3\n', stderr='')]
+[2025-03-17 16:46:01,626: INFO: _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.0.0.49:8080]
+[2025-03-17 16:46:01,631: INFO: _internal: [33mPress CTRL+C to quit[0m]
+[2025-03-17 16:46:26,299: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:46:26] "GET / HTTP/1.1" 200 -]
+[2025-03-17 16:46:27,008: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:46:27] "[36mGET /swaggerui/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 -]
+[2025-03-17 16:46:27,008: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:46:27] "[36mGET /swaggerui/swagger-ui.css HTTP/1.1[0m" 304 -]
+[2025-03-17 16:46:27,018: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:46:27] "[36mGET /swaggerui/droid-sans.css HTTP/1.1[0m" 304 -]
+[2025-03-17 16:46:27,020: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:46:27] "[36mGET /swaggerui/swagger-ui-bundle.js HTTP/1.1[0m" 304 -]
+[2025-03-17 16:46:27,271: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:46:27] "GET /swagger.json HTTP/1.1" 200 -]
+[2025-03-17 16:46:33,544: INFO: chat_bot: Collection count: 20000]
+[2025-03-17 16:46:34,359: INFO: chat_bot: Retrieved docs: [Document(id='f82ec343-1336-4959-ad20-e6503e7e6e3e', metadata={'category': 'SHOES', 'country': 'IN', 'id': 'B07XRGDJCW', 'image_path': '8e/8e306037.jpg', 'name': "Amazon Brand - Symbol Women's Red/Navy Sneakers-6 UK (39 EU) (9 US) (AZ-WSY-20)"}, page_content='red slip on sneakers Given Product description: , Warranty Description: 90 days, brand: Amazon Brand - Symbol, weight: , color: Red/ Navy, height: 1325.0, width: 2434.0, model year: , shape: , style: Sneakers, material: , product_type: SHOES'), Document(id='ea19c56b-0f5a-46d2-8b3a-71575f1e2207', metadata={'category': 'SHOES', 'country': 'CA', 'id': 'B071WK93H7', 'image_path': 'a5/a5e3054c.jpg', 'name': "Red Wagon Girls' Lace Up Metallic Hi-Top Trainers"}, page_content='a pair of sneakers with a pink sued sole Given Product description: , Lace-Up, brand: Red Wagon, weight: , color: , height: 2560.0, width: 1969.0, model year: , shape: , style: Lace Up Metallic, material: , product_type: SHOES'), Document(id='75e74e8a-86c9-4681-aa9e-c25a1a0e6e52', metadata={'category': 'SHOES', 'country': 'GB', 'id': 'B0731BL1GS', 'image_path': '1b/1b11bede.jpg', 'name': 'RED WAGON Slip on Skate, Girls’ Low-Top Sneakers'}, page_content='a pair of red floral shoes Given Product description: , Floral print uppers, brand: RED WAGON, weight: , color: , height: 561.0, width: 1526.0, model year: , shape: , style: Low-Top Sneakers, material: , product_type: SHOES'), Document(id='24db48e0-b09d-4718-b8be-b6855d589771', metadata={'category': 'SHOES', 'country': 'IN', 'id': 'B07T7ZFDDC', 'image_path': '9e/9ea533b3.jpg', 'name': "Acteo Men's Red Running Shoes-10 UK (44 EU) (AC1029-Red)"}, page_content='a pair of red sneakers Given Product description: , Warranty Description: 30 days, brand: Acteo, weight: , color: Red, height: 1500.0, width: 1500.0, model year: , shape: , style: Running Shoes, material: , product_type: SHOES')]]
+[2025-03-17 16:46:36,756: INFO: _client: HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 200 OK"]
+[2025-03-17 16:46:36,791: INFO: _internal: 127.0.0.1 - - [17/Mar/2025 16:46:36] "POST /api/submit HTTP/1.1" 200 -]

@@ -5,6 +5,7 @@ from mlProject.pipeline.stage_03_data_validation import DataValidationTrainingPi
 from mlProject.pipeline.stage_04_data_visualization import DataVisualizationTrainingPipeline
 from mlProject.pipeline.stage_05_model_trainer import ModelTrainerTrainingPipeline
 from mlProject.pipeline.stage_06_model_evaluation import ModelEvaluationTrainingPipeline
+import mlProject.components.CreateEmbeddings as ce
 
 STAGE_NAME = "Data Ingestion stage"
 try:
@@ -61,6 +62,15 @@ try:
     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
     data_ingestion = ModelEvaluationTrainingPipeline()
     data_ingestion.main()
+    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+STAGE_NAME = "Create Embedding"
+try:
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    ce.main()
     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
 except Exception as e:
     logger.exception(e)

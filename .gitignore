@@ -41,3 +41,4 @@
 /src/mlProject.egg-info/
 /artifacts/
 /fine_tuned_lora_tripletloss/
+/chromadb_vectorstore/
