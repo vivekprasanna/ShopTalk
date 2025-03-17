@@ -10,7 +10,7 @@ from mlProject import logger
 # import subprocess
 
 os.environ[
-    "OPENAI_API_KEY"] = "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"
+    "OPENAI_API_KEY"] = "your-own-key"
 
 # Initialize memory for chat history
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
