@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 
-API_ENDPOINT = "http://your-api-endpoint.com/chat"  # Replace with your actual API endpoint
+API_ENDPOINT = "http://127.0.0.1:8080/api/submit"  # Replace with your actual API endpoint
 
 st.title("🛍️ Shopping Assistant Chatbot")
 
