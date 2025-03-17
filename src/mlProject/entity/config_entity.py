@@ -28,6 +28,7 @@ class DataValidationConfig:
     data_master_path: str
     data_sample_path: str
     STATUS_FILE: str
+    image_path_prefix: str
 
 
 @dataclass(frozen=True)

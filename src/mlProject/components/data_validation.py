@@ -3,6 +3,8 @@ from mlProject import logger
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from mlProject.entity.config_entity import DataValidationConfig
+from transformers import BlipProcessor, BlipForConditionalGeneration
+from PIL import Image
 
 class DataValidation:
     def __init__(self, config: DataValidationConfig):
@@ -57,6 +59,33 @@ class DataValidation:
 
         logger.info(f"Shape of sample dataset: {df_sample.shape}")
         df_sample.to_csv(self.config.data_sample_path, index=False)
+
+    def create_image_captioning(self):
+        df_sample = pd.read_csv(self.config.data_sample_path)
+
+        # Load BLIP model
+        model_name = 'Salesforce/blip-image-captioning-base'
+        processor = BlipProcessor.from_pretrained(model_name)
+        model = BlipForConditionalGeneration.from_pretrained(model_name)
+
+        try:
+            # Apply captioning
+            df_sample['image_caption'] = df_sample['image_path'].apply(lambda x: self.generate_caption(x, model, processor))
+            df_sample['complete_product_description'] = df_sample['image_caption'] + ' ' + df_sample['enhanced_product_desc']
+            df_sample.to_csv(self.config.data_sample_path, index=False)
+            logger.info(df_sample.head())
+        except Exception as e:
+            logger.exception(e)
+            raise e
+
+    def generate_caption(self, image_path, model, processor):
+        if pd.isna(image_path):
+            return ''
+        else:
+            image = Image.open(self.config.image_path_prefix + image_path).convert('RGB')
+            inputs = processor(image, return_tensors='pt')
+            output = model.generate(**inputs)
+            return processor.decode(output[0], skip_special_tokens=True)
 
     def train_test_spliting(self):
         data = pd.read_csv(self.config.data_path)

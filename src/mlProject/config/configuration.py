@@ -63,6 +63,7 @@ class ConfigurationManager:
             data_master_path=config.data_master_path,
             data_sample_path=config.data_sample_path,
             STATUS_FILE=config.STATUS_FILE,
+            image_path_prefix=config.image_path_prefix
         )
 
         return data_validation_config

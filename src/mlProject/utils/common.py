@@ -8,6 +8,7 @@ from beartype import beartype
 from box import ConfigBox
 from pathlib import Path
 from typing import Any
+import torch
 
 
 @beartype
@@ -119,3 +120,16 @@ def get_size(path: Path) -> str:
     """
     size_in_kb = round(os.path.getsize(path) / 1024)
     return f"~ {size_in_kb} KB"
+
+
+def get_device() -> torch.device:
+    device = torch.device("cpu")
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
+
+    print("Device: ", device)
+    return device

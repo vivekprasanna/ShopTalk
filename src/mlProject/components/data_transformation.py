@@ -2,9 +2,7 @@ import pandas as pd
 import glob
 import json
 import os
-
 from mlProject import logger
-
 from mlProject.entity.config_entity import DataTransformationConfig
 
 

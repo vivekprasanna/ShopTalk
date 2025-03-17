@@ -22,6 +22,7 @@ data_validation:
   data_master_path: "artifacts/data_validation/df_master.csv"
   data_sample_path: "artifacts/data_validation/df_sample_20k.csv"
   STATUS_FILE: artifacts/data_validation/status.txt
+  image_path_prefix: "/Users/vivekprabu/Downloads/IK-Capstone/abo-images-small/images/small/"
 
 
 data_visualization:
@@ -38,6 +39,6 @@ model_trainer:
 
 model_evaluation:
   root_dir: artifacts/model_evaluation
-  test_data_path: artifacts/data_transformation/test.csv
-  model_path: artifacts/model_trainer/model.joblib
+  test_data_path: "artifacts/data_validation/df_sample_20k.csv"
+  model_path: fine_tuned_lora_tripletloss
   metric_file_name: artifacts/model_evaluation/metrics.json

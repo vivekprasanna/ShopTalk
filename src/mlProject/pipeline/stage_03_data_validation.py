@@ -14,12 +14,13 @@ class DataValidationTrainingPipeline:
     def main(self):
         config = ConfigurationManager()
         data_validation_config = config.get_data_validation_config()
+        data_validation = DataValidation(config=data_validation_config)
         if not os.path.exists(data_validation_config.data_sample_path):
             try:
-                data_validation = DataValidation(config=data_validation_config)
                 data_validation.merge_dataframes()
                 data_validation.clean_merged_data()
                 data_validation.create_sample_data()
+                data_validation.create_image_captioning()
             except Exception as e:
                 logger.exception(e)
                 raise e

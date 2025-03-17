@@ -30,5 +30,5 @@ scikit-learn~=1.6.1
 beartype~=0.20.0
 requests~=2.32.3
 gdown~=5.2.0
-peft~=0.4.0
+peft~=0.5.0
 -e . # This is needed for creation as a local Project

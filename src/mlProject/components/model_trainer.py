@@ -9,19 +9,7 @@ import torch.optim as optim
 from torch.nn import TripletMarginLoss
 from mlProject.entity.config_entity import ModelTrainerConfig
 from mlProject import logger
-
-
-def get_device():
-    device = torch.device("cpu")
-    if torch.backends.mps.is_available():
-        device = torch.device("mps")
-    elif torch.cuda.is_available():
-        device = torch.device("cuda")
-    else:
-        device = torch.device("cpu")
-
-    print("Device: ", device)
-    return device
+from mlProject.utils.common import get_device
 
 
 class ModelTrainer:
