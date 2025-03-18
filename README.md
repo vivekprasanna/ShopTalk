@@ -24,3 +24,7 @@ streamlit run /Users/vivekprabu/PycharmProjects/ShopTalk/streamlit-ui.py
 pip install -r requirements-test.txt
 pytest -m e2e
 ```
+
+## MLFlow experiment link
+https://dagshub.com/vivekprasanna.prabhu/ShopTalk.mlflow/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D
+
