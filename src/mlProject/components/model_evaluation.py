@@ -164,7 +164,7 @@ class ModelEvaluation:
             mlflow.log_metric("Mean_mAP", avg_map)
             mlflow.log_metric("Mean_NDCG", avg_ndcg)
 
-            mlflow.sklearn.log_model(peft_model, "model")
+            mlflow.sklearn.log_model(peft_model, "model", registered_model_name="fine_tuned_lora_triplet_loss")
 
 
 
