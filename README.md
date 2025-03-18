@@ -4,7 +4,10 @@
 pip install -r requirements.txt
 ```
 
-## Run main.py in the root directory as a python file. 
+## Run main.py in the root directory as a python file.
+```
+python main.py
+```
 
 # Finally run the following command
 ```

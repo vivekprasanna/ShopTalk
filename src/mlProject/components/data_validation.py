@@ -1,3 +1,5 @@
+import os
+
 from mlProject import logger
 import pandas as pd
 from mlProject.entity.config_entity import DataValidationConfig
@@ -63,10 +65,12 @@ class DataValidation:
         processor = BlipProcessor.from_pretrained(model_name)
         model = BlipForConditionalGeneration.from_pretrained(model_name)
 
+        logger.info("Applying image caption")
         try:
             # Apply captioning
             df_sample['image_caption'] = df_sample['image_path'].apply(lambda x: self.generate_caption(x, model, processor))
             df_sample['complete_product_description'] = df_sample['image_caption'] + ' ' + df_sample['enhanced_product_desc']
+            logger.info(f"Shape of sample dataset: {df_sample.shape}")
             df_sample.to_csv(self.config.data_sample_path, index=False)
             logger.info(df_sample.head())
         except Exception as e:

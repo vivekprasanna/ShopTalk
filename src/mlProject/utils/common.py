@@ -77,7 +77,7 @@ def load_json(path: Path) -> ConfigBox:
     with open(path) as f:
         content = json.load(f)
 
-    logger.info(f"json file loaded succesfully from: {path}")
+    logger.info(f"json file loaded successfully from: {path}")
     return ConfigBox(content)
 
 
@@ -128,8 +128,5 @@ def get_device() -> torch.device:
         device = torch.device("mps")
     elif torch.cuda.is_available():
         device = torch.device("cuda")
-    else:
-        device = torch.device("cpu")
-
     print("Device: ", device)
     return device
