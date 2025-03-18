@@ -51,7 +51,7 @@ class DataTransformation:
                 #         with open(self.config.STATUS_FILE, 'w') as f:
                 #             f.write(f"Additional Column found: {col}, may be ignored")
 
-                logger.info("Saving data as csv under artifacts/data_validation/df_data.csv!")
+                logger.info("Saving data as csv under artifacts/data_transformation/df_data.csv!")
                 df_products.to_csv(self.config.data_csv_path, index=False)
                 return True
 
