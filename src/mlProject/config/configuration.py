@@ -96,7 +96,7 @@ class ConfigurationManager:
 
     def get_model_evaluation_config(self) -> ModelEvaluationConfig:
         config = self.config.model_evaluation
-        params = self.params.ElasticNet
+        params = self.params.LoraConfig
         schema = self.schema.TARGET_COLUMN
 
         create_directories([config.root_dir])
@@ -109,7 +109,7 @@ class ConfigurationManager:
             metric_file_name=config.metric_file_name,
             target_column=schema.name,
             # mlflow_uri="https://dagshub.com/someshnaman/End_to_end_MLOPS_project.mlflow",
-            mlflow_uri="https://dagshub.com/ashokj0922/End_to_end_mlops.mlflow",
+            mlflow_uri="https://dagshub.com/vivekprasanna.prabhu/ShopTalk.mlflow",
         )
 
         return model_evaluation_config

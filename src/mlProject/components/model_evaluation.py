@@ -8,6 +8,9 @@ import chromadb
 from mlProject import logger
 import numpy as np
 from pathlib import Path
+import mlflow
+from urllib.parse import urlparse
+import dagshub
 
 class ModelEvaluation:
     def __init__(self, config: ModelEvaluationConfig):
@@ -80,9 +83,13 @@ class ModelEvaluation:
         return dcg / idcg if idcg > 0 else 0.0
 
     def evaluate(self):
+        dagshub.init(repo_owner='vivekprasanna.prabhu', repo_name='ShopTalk', mlflow=True)
         saved_model_path = "fine_tuned_lora_tripletloss"
         base_model = AutoModel.from_pretrained(saved_model_path)
         peft_model = PeftModel.from_pretrained(base_model, saved_model_path)
+
+        mlflow.set_registry_uri(self.config.mlflow_uri)
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
         device = get_device()
         if device.type == "mps":
@@ -90,63 +97,74 @@ class ModelEvaluation:
         else:
             peft_model = peft_model.to(device)
 
-        tokenizer = AutoTokenizer.from_pretrained(saved_model_path)
+        with mlflow.start_run():
 
-        # Ensure tokenizer is prepared correctly
-        # Set the padding token if not available
-        if tokenizer.pad_token is None:
-            tokenizer.pad_token = tokenizer.eos_token  # Use eos_token as pad_token (if available)
+            tokenizer = AutoTokenizer.from_pretrained(saved_model_path)
+
+            # Ensure tokenizer is prepared correctly
+            # Set the padding token if not available
             if tokenizer.pad_token is None:
-                tokenizer.add_special_tokens(
-                    {"pad_token": "[PAD]"})  # Add a new pad token if eos_token is also missing
+                tokenizer.pad_token = tokenizer.eos_token  # Use eos_token as pad_token (if available)
+                if tokenizer.pad_token is None:
+                    tokenizer.add_special_tokens(
+                        {"pad_token": "[PAD]"})  # Add a new pad token if eos_token is also missing
 
-        test_data = pd.read_csv(self.config.test_data_path).sample(3000)
-        test_data["embedding"] = test_data["complete_product_description"].apply(
-            lambda x: self.get_embedding(peft_model, tokenizer, x, device))
+            test_data = pd.read_csv(self.config.test_data_path)
+            test_data["embedding"] = test_data["complete_product_description"].apply(
+                lambda x: self.get_embedding(peft_model, tokenizer, x, device))
 
-        # Initialize ChromaDB client and create a collection
-        chroma_client = chromadb.PersistentClient(path="artifacts/model_evaluation/chroma_db")  # Persistent storage
-        collection = chroma_client.get_or_create_collection(name="product_embeddings")
+            # Initialize ChromaDB client and create a collection
+            chroma_client = chromadb.PersistentClient(path="artifacts/model_evaluation/chroma_db")  # Persistent storage
+            collection = chroma_client.get_or_create_collection(name="product_embeddings")
 
-        # Insert embeddings into ChromaDB, item_id,item_name,product_type,country,enhanced_product_desc,image_path
-        for idx, row in test_data.iterrows():
-            collection.add(
-                ids=[row["item_id"]],
-                embeddings=row["embedding"],
-                metadatas=[{"index": idx, "item_id": row["item_id"], "item_name": row["item_name"], "country": row["country"], "image_path": row["image_path"]}]
+            # Insert embeddings into ChromaDB, item_id,item_name,product_type,country,enhanced_product_desc,image_path
+            for idx, row in test_data.iterrows():
+                collection.add(
+                    ids=[row["item_id"]],
+                    embeddings=row["embedding"],
+                    metadatas=[{"index": idx, "item_id": row["item_id"], "item_name": row["item_name"], "country": row["country"], "image_path": row["image_path"]}]
+                )
+            logger.info("Embeddings stored in ChromaDB!")
+
+            # Compute Precision@K for all products
+            test_data["precision_at_k"] = test_data.apply(
+                lambda row: self.compute_precision_at_k(row["embedding"], row["product_type"], collection, test_data, k=10),
+                axis=1
             )
-        logger.info("Embeddings stored in ChromaDB!")
+            test_data["recall_at_k"] = test_data.apply(
+                lambda row: self.compute_recall_at_k(row["embedding"], row["product_type"], collection, test_data, k=10),
+                axis=1
+            )
+            test_data["mAP"] = test_data.apply(
+                lambda row: self.compute_map(row["embedding"], row["product_type"], collection, test_data, k=10),
+                axis=1
+            )
+            test_data["NDCG"] = test_data.apply(
+                lambda row: self.compute_ndcg_at_k(row["embedding"], row["product_type"], collection, test_data, k=10),
+                axis=1
+            )
 
-        # Compute Precision@K for all products
-        test_data["precision_at_k"] = test_data.apply(
-            lambda row: self.compute_precision_at_k(row["embedding"], row["product_type"], collection, test_data, k=10),
-            axis=1
-        )
-        test_data["recall_at_k"] = test_data.apply(
-            lambda row: self.compute_recall_at_k(row["embedding"], row["product_type"], collection, test_data, k=10),
-            axis=1
-        )
-        test_data["mAP"] = test_data.apply(
-            lambda row: self.compute_map(row["embedding"], row["product_type"], collection, test_data, k=10),
-            axis=1
-        )
-        test_data["NDCG"] = test_data.apply(
-            lambda row: self.compute_ndcg_at_k(row["embedding"], row["product_type"], collection, test_data, k=10),
-            axis=1
-        )
+            # Display results
+            logger.info(test_data[["item_id", "product_type", "precision_at_k", "recall_at_k", "mAP", "NDCG"]])
+            selected_columns = ["precision_at_k", "recall_at_k", "mAP", "NDCG"]
+            eval_result = test_data[selected_columns]
+            avg_precision = eval_result["precision_at_k"].mean()
+            avg_recall = eval_result["recall_at_k"].mean()
+            avg_map = eval_result["mAP"].mean()
+            avg_ndcg = eval_result["NDCG"].mean()
+            scores = {"avg_precision": avg_precision, "avg_recall": avg_recall, "avg_mAP": avg_map, "avg_NDCG": avg_ndcg}
+            logger.info(f"Avg scores: {scores}")
+            save_json(Path(self.config.metric_file_name), data=scores)
+            test_data.to_csv("artifacts/model_evaluation/eval_result.csv")
 
-        # Display results
-        logger.info(test_data[["item_id", "product_type", "precision_at_k", "recall_at_k", "mAP", "NDCG"]])
-        selected_columns = ["precision_at_k", "recall_at_k", "mAP", "NDCG"]
-        eval_result = test_data[selected_columns]
-        avg_precision = eval_result["precision_at_k"].mean()
-        avg_recall = eval_result["recall_at_k"].mean()
-        avg_map = eval_result["mAP"].mean()
-        avg_ndcg = eval_result["NDCG"].mean()
-        scores = {"avg_precision": avg_precision, "avg_recall": avg_recall, "avg_mAP": avg_map, "avg_NDCG": avg_ndcg}
-        logger.info(f"Avg scores: {scores}")
-        save_json(Path(self.config.metric_file_name), data=scores)
-        test_data.to_csv("artifacts/model_evaluation/eval_result.csv")
+            mlflow.log_params(self.config.all_params)
+
+            mlflow.log_metric("Mean_precision_at_k_10", avg_precision)
+            mlflow.log_metric("Mean_recall_at_k_10", avg_recall)
+            mlflow.log_metric("Mean_mAP", avg_map)
+            mlflow.log_metric("Mean_NDCG", avg_ndcg)
+
+            mlflow.sklearn.log_model(peft_model, "model")
 
 
 

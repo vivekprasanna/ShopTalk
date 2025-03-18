@@ -1,3 +1,7 @@
-ElasticNet:
-  alpha: 0.65
-  l1_ratio: 0.62
+LoraConfig:
+  task_type: TaskType.FEATURE_EXTRACTION,
+  inference_mode: False,
+  r: 8,
+  lora_alpha: 32,
+  lora_dropout: 0.1,
+  bias: "none"

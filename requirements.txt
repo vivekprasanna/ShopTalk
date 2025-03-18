@@ -36,4 +36,5 @@ flask-restx
 langchain-openai
 langchain-chroma
 flask-cors
+dagshub
 -e . # This is needed for creation as a local Project
