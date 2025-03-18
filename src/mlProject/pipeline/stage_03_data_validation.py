@@ -1,7 +1,6 @@
 from mlProject.config.configuration import ConfigurationManager
 from mlProject.components.data_validation import DataValidation
 from mlProject import logger
-from pathlib import Path
 import os
 
 STAGE_NAME = "Data Transformation stage"

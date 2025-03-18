@@ -7,6 +7,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.embeddings import HuggingFaceEmbeddings
 import os
 from mlProject import logger
+from mlProject.config.configuration import ConfigurationManager
 # import subprocess
 
 os.environ[
@@ -20,6 +21,7 @@ PERSIST_DIRECTORY = "./chromadb_vectorstore"
 embeddings = HuggingFaceEmbeddings(model_name="./fine_tuned_lora_tripletloss")
 vector_store = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embeddings)  # ✅ Updated import
 retriever = vector_store.as_retriever()
+config = ConfigurationManager().get_data_validation_config()
 
 # result = subprocess.run(["ls", "-lh", "chromadb_vectorstore"], capture_output=True, text=True, check=True)
 #
@@ -60,7 +62,11 @@ qa_prompt = PromptTemplate.from_template(
 
     Question: {input}
 
-    Answer:"""
+    Answer:
+      - **🛍️ Product Name:** 
+      - ✅ *Matching Details*
+      - 🖼️ ![Thumbnail](Image_URL)
+    """
 )
 
 # ✅ Create document combination chain
@@ -75,11 +81,27 @@ chatbot = create_retrieval_chain(
 
 def ask_question(query, chat_history):
     """Function to handle user queries and maintain chat history."""
-    logger.info(f"Collection count: {vector_store._collection.count()}")
     retrieved_docs = retriever.get_relevant_documents(query)
     logger.info(f"Retrieved docs: {retrieved_docs}")
     # qaresponse = qa_chain.run(input_documents=retrieved_docs, question=query)
     # print("QA Chain Response:", qaresponse)
     response = chatbot.invoke({"input": query, "chat_history": chat_history})
-    chat_history.append((query, response["answer"]))
-    return response["answer"], chat_history
+    formatted_response = format_response(response["answer"], retrieved_docs)
+    chat_history.append((query, formatted_response))
+    return response["answer"], chat_history, retrieved_docs
+
+
+def format_response(answer, retrieved_docs):
+    """Format the retrieved document details into a bulleted response with thumbnails."""
+    formatted_answer = []
+    for doc in retrieved_docs:
+        name = doc.metadata.get("name", "Unknown Product")
+        image_path = doc.metadata.get("image_path", "")
+        image_url = f"{config.image_path_prefix}{image_path}" if image_path else ""
+
+        formatted_answer.append(
+            f"- **🛍️ {name}**\n"
+            f"  - ✅ {doc.page_content.strip()}\n"
+            f"  - 🖼️ ![Thumbnail]({image_url})\n"
+        )
+    return "\n".join(formatted_answer)

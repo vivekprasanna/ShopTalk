@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 import os
 import mlProject.components.chat_bot as cb
+from mlProject import logger
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -37,13 +38,24 @@ class Chatbot(Resource):
             query = data.get("question")
 
             # Ensure response is clean
-            answer, chat_history = cb.ask_question(query, chat_history)
-
+            answer, chat_history, retrieved_docs = cb.ask_question(query, chat_history)
+            logger.info(f"retrieved docs in app: {retrieved_docs}")
             # Strip any problematic newlines
             clean_response = answer.replace("\n", " ").replace("\r", "")
 
-            return jsonify({"answer": clean_response, "chat_history": chat_history})
+            serializable_docs = []
+            for doc in retrieved_docs:
+                serializable_docs.append({
+                    "page_content": doc.page_content,  # Extract text
+                    "metadata": doc.metadata  # Extract metadata dictionary
+                })
+
+            return_json = jsonify({"answer": clean_response, "chat_history": chat_history, "retrieved_docs": serializable_docs})
+            logger.info(f"Returning response: {return_json}")
+
+            return return_json
         except Exception as e:
+            logger.exception(f"error: {e}")
             return {"error": str(e)}, 500
 
 
