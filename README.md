@@ -18,3 +18,9 @@ This should get the swagger accessible at
 ```
 streamlit run /Users/vivekprabu/PycharmProjects/ShopTalk/streamlit-ui.py
 ```
+
+## To run E2E test
+```commandline
+pip install -r requirements-test.txt
+pytest -m e2e
+```
