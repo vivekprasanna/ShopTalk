@@ -17,8 +17,8 @@ os.environ[
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
 # Load embeddings and vector store
-PERSIST_DIRECTORY = "./app/chromadb_vectorstore"
-embeddings = HuggingFaceEmbeddings(model_name="./app/fine_tuned_lora_tripletloss")
+PERSIST_DIRECTORY = "./chromadb_vectorstore"
+embeddings = HuggingFaceEmbeddings(model_name="./fine_tuned_lora_tripletloss")
 vector_store = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embeddings)  # ✅ Updated import
 retriever = vector_store.as_retriever()
 config = ConfigurationManager().get_data_validation_config()
