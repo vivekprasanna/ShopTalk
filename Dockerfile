@@ -1,5 +1,8 @@
 FROM python:3.12-slim
 
+ENV MLFLOW_TRACKING_URI=https://dagshub.com/vivekprasanna.prabhu/ShopTalk.mlflow
+ENV MODEL_DIR="/app/fine_tuned_lora_tripletloss"
+
 # Install necessary system packages for wordcloud and other dependencies
 RUN apt update -y && apt install -y \
     awscli \
