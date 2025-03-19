@@ -13,7 +13,7 @@ def main():
     PERSIST_DIRECTORY = "chromadb_vectorstore"
 
     # Initialize ChromaDB and OpenAI embeddings
-    embeddings = HuggingFaceEmbeddings(model_name="./fine_tuned_lora_tripletloss")
+    embeddings = HuggingFaceEmbeddings(model_name="./app/fine_tuned_lora_tripletloss")
     vectorstore = Chroma(embedding_function=embeddings, persist_directory=PERSIST_DIRECTORY)  # Pass embeddings to Chroma
 
     df_sample = pd.read_csv("artifacts/data_validation/df_sample_20k.csv")
