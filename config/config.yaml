@@ -22,8 +22,8 @@ data_validation:
   data_master_path: "artifacts/data_validation/df_master.csv"
   data_sample_path: "artifacts/data_validation/df_sample_20k.csv"
   STATUS_FILE: artifacts/data_validation/status.txt
-  image_path_prefix: "/Users/vivekprabu/Downloads/IK-Capstone/abo-images-small/images/small/"
-  #image_path_prefix: "/Users/mitilroy/IK/Projects/Capstone/ShopTalk/abo-images-small/images/small/"
+  image_path_prefix: "artifacts/data_ingestion/data/small/images/small/"
+  #image_path_prefix: "/Users/mitilroy/IK/Projects/Capstone/ShopTalk/abo-images-small/images/small/" ##No need for this anymore
 
 
 data_visualization:
