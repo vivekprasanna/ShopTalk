@@ -18,5 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Make the startup script executable
 RUN chmod +x start.sh
 
+EXPOSE 8080 8501
+
 # Run both FastAPI/Flask app and Streamlit UI
 CMD ["./start.sh"]
