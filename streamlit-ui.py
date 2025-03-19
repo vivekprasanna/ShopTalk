@@ -14,7 +14,6 @@ if "chat_history" not in st.session_state:
 query = st.text_input("Ask me about products:")
 config = ConfigurationManager().get_data_validation_config()
 
-
 def format_response(answer, retrieved_docs):
     """Format retrieved product details with images for display."""
     formatted_response = []
@@ -33,7 +32,6 @@ def format_response(answer, retrieved_docs):
         })
 
     return formatted_response
-
 
 if st.button("Search"):
     if query:
@@ -57,13 +55,19 @@ if st.button("Search"):
 # Display chat history with images
 st.subheader("Chat History")
 
-for q, responses in st.session_state.chat_history:
+# Iterate over chat history in reverse order to show the latest at the top
+for q, responses in reversed(st.session_state.chat_history):
     st.write(f"**You:** {q}")
 
-    for response in responses:
-        st.write(f"**🛍️ {response['name']}**)")
-        st.write(f"✅ {response['description']}")
-        if response["image_path"]:
-            st.image(response["image_path"], caption=response["name"], use_container_width=True)
-        else:
-            st.write("🖼️ No image available")
+    # Display responses in a table-like layout with 2 items per row
+    for i in range(0, len(responses), 2):  # Iterate in steps of 2
+        cols = st.columns(2)  # Create 2 columns
+
+        for col, response in zip(cols, responses[i:i+2]):  # Pair columns with responses
+            with col:
+                st.write(f"**🛍️ {response['name']}**")
+                st.write(f"✅ {response['description']}")
+                if response["image_path"]:
+                    st.image(response["image_path"], caption=response["name"], width=150)
+                else:
+                    st.write("🖼️ No image available")
