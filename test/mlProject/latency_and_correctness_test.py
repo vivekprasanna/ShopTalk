@@ -3,17 +3,27 @@ import pytest
 from test import test_logger
 import time
 
+test_cases = [
+    ("find red shoes", "shoes", 3.0),
+    ("find blue jeans", "jeans", 3.0),
+    ("find black jackets", "jackets", 3.0),
+    ("find phone cases for iphone", "phone case", 3.0),
+    ("find white sneakers", "sneakers", 3.0),
+    ("find groceries", "groceries", 3.0),
+]
+
 @pytest.mark.e2e
-def test_chatbot_ui_and_latency():
+@pytest.mark.parametrize("input_query, expected_text, max_latency", test_cases)
+def test_chatbot_ui_and_latency(input_query, expected_text, max_latency):
     with sync_playwright() as p:
         try:
-            test_logger.info("Starting test_chatbot_ui")
+            test_logger.info(f"Starting UI test for query: {input_query}")
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()
             page.goto("http://localhost:8501")  # Your Streamlit URL
 
             page.wait_for_selector("input")
-            page.locator("input").fill("find red shoes")
+            page.locator("input").fill(input_query)
 
             # Wait for button and click it
             page.wait_for_selector("button:has-text('Search')")
@@ -28,8 +38,10 @@ def test_chatbot_ui_and_latency():
             latency = end_time - start_time
             test_logger.info(f"Latency: {latency}")
 
-            assert "shoes" in response_text
-            assert latency < 3.0
+            # Assertions
+            assert expected_text in response_text, f"Expected '{expected_text}' in response but got '{response_text}'"
+            assert latency < max_latency, f"Latency exceeded {max_latency} seconds"
+
 
             browser.close()
         except Exception as e:
