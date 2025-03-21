@@ -16,9 +16,11 @@ os.environ[
 # Initialize memory for chat history
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
+model_path = os.getenv("MODEL_DIR", "./fine_tuned_lora_tripletloss")  # Use environment variable
+embeddings = HuggingFaceEmbeddings(model_name=model_path)
+
 # Load embeddings and vector store
 PERSIST_DIRECTORY = "./chromadb_vectorstore"
-embeddings = HuggingFaceEmbeddings(model_name="./fine_tuned_lora_tripletloss")
 vector_store = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embeddings)  # ✅ Updated import
 retriever = vector_store.as_retriever()
 config = ConfigurationManager().get_data_validation_config()
